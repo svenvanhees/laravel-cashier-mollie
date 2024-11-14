@@ -5,6 +5,7 @@ namespace Laravel\Cashier\Charge;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Cashier;
+use Laravel\Cashier\Charge\Contracts\Chargeable;
 use Laravel\Cashier\FirstPayment\Actions\AddGenericOrderItem;
 use Laravel\Cashier\FirstPayment\Actions\BaseAction as FirstPaymentAction;
 use Laravel\Cashier\Order\OrderItem;
@@ -13,6 +14,8 @@ use Money\Money;
 class ChargeItem
 {
     protected Model $owner;
+
+    protected ?Chargeable $chargeable;
 
     protected Money $unitPrice;
 

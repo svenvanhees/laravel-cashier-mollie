@@ -2,11 +2,14 @@
 
 namespace Laravel\Cashier\Charge\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Charge\ChargeItem;
 use Laravel\Cashier\Charge\ChargeItemCollection;
 
 interface ChargeBuilder
 {
+    public static function forChargeable(Chargeable $chargeable, Model $billable): self;
+
     public function addItem(ChargeItem $item): self;
 
     public function setItems(ChargeItemCollection $items): self;

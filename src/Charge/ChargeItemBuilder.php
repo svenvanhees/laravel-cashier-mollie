@@ -3,6 +3,7 @@
 namespace Laravel\Cashier\Charge;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Cashier\Charge\Contracts\Chargeable;
 use Money\Money;
 
 class ChargeItemBuilder
@@ -21,6 +22,17 @@ class ChargeItemBuilder
     {
         $this->owner = $owner;
         $this->taxPercentage = $owner->taxPercentage();
+    }
+
+    public static function forChargeable(Chargeable $chargeable, Model $billable): ChargeItemBuilder
+    {
+        $result = new static($billable);
+        $result->orderable = $chargeable->orderable();
+        $result->unitPrice($chargeable->unitPrice());
+        $result->description($chargeable->description());
+        $result->taxPercentage($billable->taxPercentage());
+
+        return $result;
     }
 
     public function unitPrice(Money $unitPrice): ChargeItemBuilder
