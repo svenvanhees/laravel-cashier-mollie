@@ -8,6 +8,8 @@ use Money\Money;
 
 class ChargeItemBuilder
 {
+    protected Model $orderable;
+
     protected Model $owner;
 
     protected Money $unitPrice;
@@ -18,23 +20,17 @@ class ChargeItemBuilder
 
     protected float $taxPercentage;
 
-    protected Orderable $orderable;
-
     public function __construct(Model $owner)
     {
         $this->owner = $owner;
         $this->taxPercentage = $owner->taxPercentage();
     }
 
-    public static function for(Orderable $orderable, Model $billable): ChargeItemBuilder
+    public function for(Model $orderable): ChargeItemBuilder
     {
-        $result = new static($billable);
-        $result->orderable = $orderable;
-        $result->unitPrice($orderable->unitPrice());
-        $result->description($orderable->description());
-        $result->taxPercentage($billable->taxPercentage());
+        $this->orderable = $orderable;
 
-        return $result;
+        return $this;
     }
 
     public function unitPrice(Money $unitPrice): ChargeItemBuilder

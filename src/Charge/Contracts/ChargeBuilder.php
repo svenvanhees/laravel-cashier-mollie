@@ -8,7 +8,7 @@ use Laravel\Cashier\Charge\ChargeItemCollection;
 
 interface ChargeBuilder
 {
-    public static function for(Orderable $orderable, Model $billable): self;
+    public function for(Orderable $orderable): self;
 
     public function addItem(ChargeItem $item): self;
 
