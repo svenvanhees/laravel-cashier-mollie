@@ -15,7 +15,7 @@ class ChargeItem
 {
     protected Model $owner;
 
-    protected ?Model $orderable;
+    protected ?Orderable $orderable;
 
     protected Money $unitPrice;
 
@@ -28,7 +28,7 @@ class ChargeItem
     protected int $roundingMode;
 
     public function __construct(
-        Model     $orderable,
+        Orderable     $orderable,
         Model     $owner,
         Money     $unitPrice,
         string    $description,
@@ -48,11 +48,12 @@ class ChargeItem
     public function toFirstPaymentAction(): FirstPaymentAction
     {
         $item = new AddGenericOrderItem(
-            $this->owner,
-            $this->unitPrice,
-            $this->quantity,
-            $this->description,
-            $this->roundingMode
+            owner: $this->owner,
+            unitPrice: $this->unitPrice,
+            quantity: $this->quantity,
+            description: $this->description,
+            roundingMode: $this->roundingMode,
+            orderable: $this->orderable
         );
 
         $item->withTaxPercentage($this->taxPercentage);
@@ -63,8 +64,8 @@ class ChargeItem
     public function toOrderItem(array $overrides = []): OrderItem
     {
         return Cashier::$orderItemModel::make(array_merge([
-            'orderable_type' => $this->orderable->getMorphClass(),
-            'orderable_id' => $this->orderable->getKey(),
+            'orderable_type' => $this->orderable->model()->getMorphClass(),
+            'orderable_id' => $this->orderable->model()->getKey(),
             'owner_type' => $this->owner->getMorphClass(),
             'owner_id' => $this->owner->getKey(),
             'description' => $this->description,

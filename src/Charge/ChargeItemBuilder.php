@@ -8,7 +8,7 @@ use Money\Money;
 
 class ChargeItemBuilder
 {
-    protected Model $orderable;
+    protected ?Orderable $orderable;
 
     protected Model $owner;
 
@@ -26,9 +26,12 @@ class ChargeItemBuilder
         $this->taxPercentage = $owner->taxPercentage();
     }
 
-    public function for(Model $orderable): ChargeItemBuilder
+    public function for(Orderable $orderable): ChargeItemBuilder
     {
         $this->orderable = $orderable;
+        $this->taxPercentage = $orderable->taxPercentage();
+        $this->unitPrice = $orderable->unitPrice();
+        $this->description = $orderable->description();
 
         return $this;
     }

@@ -7,6 +7,8 @@ use Money\Money;
 
 interface Orderable
 {
+    public function model(): Model;
     public function unitPrice(): Money;
     public function description(): string;
+    public function taxPercentage(): float;
 }

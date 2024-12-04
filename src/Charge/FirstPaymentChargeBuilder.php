@@ -4,11 +4,14 @@ namespace Laravel\Cashier\Charge;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Charge\Contracts\ChargeBuilder as Contract;
+use Laravel\Cashier\Charge\Contracts\Orderable;
 use Laravel\Cashier\FirstPayment\FirstPaymentBuilder;
 use Laravel\Cashier\Http\RedirectToCheckoutResponse;
 
 class FirstPaymentChargeBuilder implements Contract
 {
+    protected ?Orderable $orderable;
+
     protected Model $owner;
 
     protected ChargeItemCollection $items;

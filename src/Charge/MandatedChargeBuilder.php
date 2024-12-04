@@ -11,8 +11,6 @@ use Laravel\Cashier\Order\Order;
 
 class MandatedChargeBuilder implements Contract
 {
-    protected Orderable $orderable;
-
     protected Model $owner;
 
     protected ChargeItemCollection $items;
@@ -22,12 +20,6 @@ class MandatedChargeBuilder implements Contract
     protected Carbon $processAt;
 
     protected bool $processNow = true;
-
-    public function for(Orderable $orderable): self
-    {
-        $this->orderable = $orderable;
-        return $this;
-    }
 
     public function __construct(Model $owner)
     {

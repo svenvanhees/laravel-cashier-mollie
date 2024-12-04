@@ -4,6 +4,7 @@ namespace Laravel\Cashier\FirstPayment\Actions;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Cashier;
+use Laravel\Cashier\Charge\Contracts\Orderable;
 use Money\Money;
 
 abstract class BaseAction
@@ -28,6 +29,8 @@ abstract class BaseAction
 
     /** @var int */
     protected $roundingMode = Money::ROUND_HALF_UP;
+
+    protected ?Orderable $orderable;
 
     /**
      * Rebuild the Action from a payload.
@@ -147,5 +150,13 @@ abstract class BaseAction
     public function getTotal()
     {
         return $this->getSubtotal()->add($this->getTax());
+    }
+
+    /**
+     * @return Orderable
+     */
+    public function getOrderable()
+    {
+        return $this->orderable;
     }
 }
