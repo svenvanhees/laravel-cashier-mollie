@@ -107,11 +107,11 @@ class FirstPaymentSubscriptionBuilder implements Contract
             $subtotal = $total->subtract($vat);
 
             $actions[] = new AddGenericOrderItem(
-                $this->owner,
-                $subtotal,
-                1,
-                $this->plan->firstPaymentDescription(),
-                $this->roundingMode($total, $taxPercentage)
+                owner: $this->owner,
+                unitPrice:  $subtotal,
+                quantity: 1,
+                description: $this->plan->firstPaymentDescription(),
+                roundingMode: $this->roundingMode($total, $taxPercentage)
             );
         } elseif ($coupon) {
             $actions[] = new ApplySubscriptionCouponToPayment($this->owner, $coupon, $actions->processedOrderItems());

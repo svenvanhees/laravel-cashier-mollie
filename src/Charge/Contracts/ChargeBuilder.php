@@ -2,6 +2,7 @@
 
 namespace Laravel\Cashier\Charge\Contracts;
 
+use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Charge\ChargeItem;
 use Laravel\Cashier\Charge\ChargeItemCollection;
 

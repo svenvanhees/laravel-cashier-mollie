@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Cashier\Cashier;
 use Laravel\Cashier\Charge\Contracts\ChargeBuilder as Contract;
+use Laravel\Cashier\Charge\Contracts\Orderable;
 use Laravel\Cashier\Order\Order;
 
 class MandatedChargeBuilder implements Contract
