@@ -51,13 +51,23 @@ class AddGenericOrderItem extends BaseAction
         $quantity = $payload['quantity'] ?? 1;
         $unit_price = $payload['subtotal'] ?? $payload['unit_price'];
 
+        if ($orderable) {
+            return (new static(
+                orderable: $orderable,
+                owner: $owner,
+                unitPrice: mollie_array_to_money($unit_price),
+                quantity: $quantity,
+                description: $payload['description']
+            ))->withTaxPercentage($taxPercentage);
+        }
+
         return (new static(
-            orderable: $orderable,
             owner: $owner,
             unitPrice: mollie_array_to_money($unit_price),
             quantity: $quantity,
             description: $payload['description']
         ))->withTaxPercentage($taxPercentage);
+
     }
 
     /**
@@ -84,8 +94,8 @@ class AddGenericOrderItem extends BaseAction
     public function makeProcessedOrderItems()
     {
         return $this->owner->orderItems()->make([
-            'orderable_id' => $this->getOrderable()->model()->id,
-            'orderable_type' => $this->getOrderable()->model()->getMorphClass(),
+            'orderable_id' => $this->getOrderable()?->model()?->id,
+            'orderable_type' => $this->getOrderable()?->model()?->getMorphClass(),
             'description' => $this->getDescription(),
             'currency' => $this->getCurrency(),
             'process_at' => now(),
