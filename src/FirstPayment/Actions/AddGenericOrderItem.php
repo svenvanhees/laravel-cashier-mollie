@@ -61,11 +61,12 @@ class AddGenericOrderItem extends BaseAction
             ))->withTaxPercentage($taxPercentage);
         }
 
+        // Removed named parameters for AddBalance Class compatibility
         return (new static(
-            owner: $owner,
-            unitPrice: mollie_array_to_money($unit_price),
-            quantity: $quantity,
-            description: $payload['description']
+            $owner,
+            mollie_array_to_money($unit_price),
+            $quantity,
+            $payload['description']
         ))->withTaxPercentage($taxPercentage);
 
     }
