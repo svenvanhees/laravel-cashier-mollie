@@ -65,11 +65,10 @@ class AddGenericOrderItem extends BaseAction
      */
     public function getPayload()
     {
-        Log::info('AddGenericOrderItem::getPayload: ' . json_encode($this->getOrderable()->model()));
         return [
             'handler' => static::class,
-            'orderable_id' => $this->getOrderable()->model()->id,
-            'orderable_type' => $this->getOrderable()->model()->getMorphClass(),
+            'orderable_id' => $this->getOrderable()->model()?->id,
+            'orderable_type' => $this->getOrderable()->model()?->getMorphClass(),
             'description' => $this->getDescription(),
             'unit_price' => money_to_mollie_array($this->getUnitPrice()),
             'quantity' => $this->getQuantity(),
