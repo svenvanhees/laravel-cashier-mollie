@@ -26,8 +26,12 @@ class ChargeItemBuilder
         $this->taxPercentage = $owner->taxPercentage();
     }
 
-    public function for(Orderable $orderable): ChargeItemBuilder
+    public function for(?Orderable $orderable): ChargeItemBuilder
     {
+        if (! $orderable) {
+            return $this;
+        }
+
         $this->orderable = $orderable;
         $this->taxPercentage = $orderable->taxPercentage();
         $this->unitPrice = $orderable->unitPrice();

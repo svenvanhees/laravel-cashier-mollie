@@ -28,7 +28,7 @@ class ChargeItem
     protected int $roundingMode;
 
     public function __construct(
-        Orderable     $orderable,
+        ?Orderable     $orderable,
         Model     $owner,
         Money     $unitPrice,
         string    $description,
@@ -64,8 +64,8 @@ class ChargeItem
     public function toOrderItem(array $overrides = []): OrderItem
     {
         return Cashier::$orderItemModel::make(array_merge([
-            'orderable_type' => $this->orderable->model()->getMorphClass(),
-            'orderable_id' => $this->orderable->model()->getKey(),
+            'orderable_type' => $this->orderable?->model()->getMorphClass(),
+            'orderable_id' => $this->orderable?->model()->getKey(),
             'owner_type' => $this->owner->getMorphClass(),
             'owner_id' => $this->owner->getKey(),
             'description' => $this->description,
