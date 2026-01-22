@@ -41,7 +41,7 @@ class FirstPaymentHandler
     public function execute()
     {
         $order = DB::transaction(function () {
-            $this->owner->mollie_mandate_id = $this->molliePayment->mandateId;
+            $this->owner->{$this->owner->getMollieMandateIdColumn()} = $this->molliePayment->mandateId;
             $this->owner->save();
 
             $orderItems = $this->executeActions();
